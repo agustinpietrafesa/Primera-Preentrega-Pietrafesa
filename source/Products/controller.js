@@ -33,10 +33,35 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.post('/', async (req, res) => {
 
-router.post('/', (req, res) => {
-    console.log(req.body)
-    res.json({message: `${req.body}`})
+
+    try {
+        
+
+        const { title, description, code, price, state, stock, category, thumbnails} = req.body
+
+        const newProduct = {
+            title,
+            description,
+            code,
+            price: Number(price),
+            state,
+            stock: Number(stock),
+            category,
+            thumbnails,
+        }
+
+        await managerProducts.getProducts()
+        await managerProducts.addProduct(newProduct)
+        res.json({message: `this product was succesfully added ${req.body.title}`})
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+
+    
 })
 
 router.put('/:id', (req, res) => {
