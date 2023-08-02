@@ -4,6 +4,7 @@ const ProductManager = require('../classes/ProductManager')
 
 const router = Router()
 const managerProducts = new ProductManager()
+let productId = 0
 
 router.get('/', async (req, res) => {
     try {
@@ -38,6 +39,7 @@ router.post('/', async (req, res) => {
 
     try {
         
+
 
         const { title, description, code, price, state, stock, category, thumbnails} = req.body
 

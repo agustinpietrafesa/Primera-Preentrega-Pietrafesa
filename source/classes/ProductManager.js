@@ -29,12 +29,14 @@ class ProductManager {
     }  
     /*********Metodo para agregar productos nuevos la lista *************/
     async addProduct(newProduct) {
-        
+
         
         try {
-
-            this.productId++
-
+            this.getProducts()
+            console.log(this.products.length)
+            this.productId = Number([this.products.length]) + 1 
+            
+            newProduct.id = this.productId++
             /*******Generamos la obligatoriedad de los parametros  *********/
             const allParams = [
                 newProduct.title,
@@ -46,23 +48,25 @@ class ProductManager {
                 newProduct.thumbnails, 
                 newProduct.category,
                 ]
-
-                newProduct.id = this.productId
-
-            const reqParams = allParams.every(value => value);
-    
-            if ( !reqParams ){
-                console.warn('Todos los parametros deben completarse')
-                return;
+                
+                    
+                
+                const reqParams = allParams.every(value => value);
+                
+                if ( !reqParams ){
+                    console.warn('Todos los parametros deben completarse')
+                    return;
             }
             /********Generamos la singulairdad del code ******/
             
             const checkCode = this.products.find(productCode => productCode.code === newProduct.code)
-            
+
+
+
+
             if(checkCode) {
                 console.log(`El producto con el codigo ${checkCode.code} ya esta ingresado en el sistema.`)
-            } else {            
-                console.log(newProduct)
+            } else {           
                 this.products.push(newProduct);
                 console.log(this.products)
             }
