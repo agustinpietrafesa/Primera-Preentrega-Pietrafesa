@@ -4,7 +4,7 @@ const ProductManager = require('../classes/ProductManager')
 
 const router = Router()
 const managerProducts = new ProductManager()
-let productId = 0
+
 
 router.get('/', async (req, res) => {
     try {
@@ -52,8 +52,16 @@ router.post('/', async (req, res) => {
         }
 
         await managerProducts.getProducts()
+        const allProducts = await managerProducts.getProducts()
+        const checkCode = allProducts.find(productCode => productCode.code === newProduct.code)
+
+        checkCode 
+        ?
+        res.json({message: `the product with code ${newProduct.code} is already in the system`})
+        :
+        res.json({message: `this product was succesfully added ${req.body.title}, ${req.body.description}`})
+        
         await managerProducts.addProduct(newProduct)
-        res.json({message: `this product was succesfully added ${req.body.title}`})
         
     } catch (error) {
         console.log(error)
@@ -63,9 +71,14 @@ router.post('/', async (req, res) => {
     
 })
 
-router.put('/:id', (req, res) => {
-    console.log(req.body)
-    res.json( { message: `update user`})
+router.put('/:id', async (req, res) => {
+    try {
+        const { id, key, value } = req.body
+        await managerProducts.updateProduct( Number(id), key, value)
+        res.json( { message: `update user`})
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 router.delete('/:id', async (req, res) => {
@@ -73,7 +86,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params
         await managerProducts.deleteProduct(Number(id) )
-        res.json( { message: `delete user ${req.params.id}`})        
+        res.json( { message: `the product with id ${req.params.id} has been deleted`})        
     } catch (error) {
         console.log(error)
     }

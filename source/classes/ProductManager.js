@@ -9,7 +9,7 @@ class ProductManager {
         this.path = './files/Products.JSON'
 
     };
-    productId = 0 
+
 
     
     /*********Metodo que retorna toda la lista de los productos que haya hasta el momento *******/
@@ -33,9 +33,17 @@ class ProductManager {
         
         try {
             this.getProducts()
-            this.productId = Number([this.products.length]) + 1 
+            const allProducts = await this.getProducts()
             
-            newProduct.id = this.productId++
+            if( allProducts.length = 0 ){
+                newProduct.id = 1;
+            }else{
+                const productsList = await this.getProducts()
+                const lastProductAdded = productsList[productsList.length - 1]
+                newProduct.id = lastProductAdded.id + 1
+            }
+
+
             /*******Generamos la obligatoriedad de los parametros  *********/
             const allParams = [
                 newProduct.title,
@@ -58,9 +66,8 @@ class ProductManager {
             }
             /********Generamos la singulairdad del code ******/
             
+            
             const checkCode = this.products.find(productCode => productCode.code === newProduct.code)
-
-
 
 
             if(checkCode) {
