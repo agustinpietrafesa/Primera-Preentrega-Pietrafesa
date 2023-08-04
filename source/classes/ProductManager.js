@@ -33,7 +33,6 @@ class ProductManager {
         
         try {
             this.getProducts()
-            console.log(this.products.length)
             this.productId = Number([this.products.length]) + 1 
             
             newProduct.id = this.productId++

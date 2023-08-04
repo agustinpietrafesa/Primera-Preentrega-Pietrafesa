@@ -38,9 +38,6 @@ router.post('/', async (req, res) => {
 
 
     try {
-        
-
-
         const { title, description, code, price, state, stock, category, thumbnails} = req.body
 
         const newProduct = {
@@ -71,8 +68,17 @@ router.put('/:id', (req, res) => {
     res.json( { message: `update user`})
 })
 
-router.delete('/:id', (req, res) => {
-    res.json( { message: `delete user ${req.params.id}`})
+router.delete('/:id', async (req, res) => {
+
+    try {
+        const { id } = req.params
+        await managerProducts.deleteProduct(Number(id) )
+        res.json( { message: `delete user ${req.params.id}`})        
+    } catch (error) {
+        console.log(error)
+    }
+
+
 })
 
 module.exports = router
