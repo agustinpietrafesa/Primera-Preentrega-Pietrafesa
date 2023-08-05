@@ -66,18 +66,25 @@ class CartManager {
                 const { id, code } = product
                 
                 if(cart){
-                    cart.products.id = id,
-                    cart.products.code = code
-              
-                    console.log(cart.products)
-                    if(cart.products){
-                        cart.products.quantity = 1
-                    }else{
-                        const newQuantity = cart.products.quantity +1 
-                        cart.products.quantity = newQuantity + 1
+                    const newCart = {
+                        id,
+                        code
                     }
+                    
+                    const cartKeys = Object.keys(newCart)
+                    
+                    cartKeys.includes('quantity')
+                    ?
+                    newCart.quantity = newCart.quantity + 1
+                    :
+                    newCart.quantity = 1
+                    
 
                     
+                    cart.products.push(newCart)
+                    this.carts.push(cart)
+                    await fs.promises.writeFile(this.path, JSON.stringify(this.carts))
+                    console.log(cart)     
                 }else{
                     console.log('el carrito no existe')
                 }
