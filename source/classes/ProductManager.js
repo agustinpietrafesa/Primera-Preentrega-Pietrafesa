@@ -34,14 +34,16 @@ class ProductManager {
         try {
             this.getProducts()
             const allProducts = await this.getProducts()
+            const lastProductAdded = allProducts[allProducts.length - 1]
+
+            newProduct.id = 0
             
-            if( allProducts.length = 0 ){
-                newProduct.id = 1;
-            }else{
-                const productsList = await this.getProducts()
-                const lastProductAdded = productsList[productsList.length - 1]
-                newProduct.id = lastProductAdded.id + 1
-            }
+
+            lastProductAdded
+            ?
+            newProduct.id = lastProductAdded.id + 1
+            :
+            newProduct.id = 1;
 
 
             /*******Generamos la obligatoriedad de los parametros  *********/
@@ -74,7 +76,6 @@ class ProductManager {
                 console.log(`El producto con el codigo ${checkCode.code} ya esta ingresado en el sistema.`)
             } else {           
                 this.products.push(newProduct);
-                console.log(this.products)
             }
             
     
@@ -114,10 +115,24 @@ class ProductManager {
                 const data = await fs.promises.readFile(this.path, 'utf-8')
                 const ourProducts = JSON.parse(data)
                 const productoBuscado = ourProducts.find(product => product.id === id)
+                
+                if(!productoBuscado){
+                    console.log(`Sorry, we couldnt find a product with id ${id} in the system.`)
+                }else{
+                const productKeys = Object.keys(productoBuscado)
+                if(productKeys.includes(campo)) {
                 await this.deleteProduct(id)
                 let key = campo
                 productoBuscado[key] = valor
-                productoBuscado ? this.products.push(productoBuscado) : console.log('Product Not Found');
+                this.products.push(productoBuscado)}
+                else {
+                    console.log(`The key ${campo} is not a property of the products`);
+                }
+                }
+
+
+
+
                 await fs.promises.writeFile(this.path, JSON.stringify(this.products))
 
             }else{

@@ -5,7 +5,6 @@ const ProductManager = require('../classes/ProductManager')
 const router = Router()
 const managerProducts = new ProductManager()
 
-
 router.get('/', async (req, res) => {
     try {
         const { limit } = req.query
@@ -75,7 +74,20 @@ router.put('/:id', async (req, res) => {
     try {
         const { id, key, value } = req.body
         await managerProducts.updateProduct( Number(id), key, value)
-        res.json( { message: `update user`})
+        const allProducts = await managerProducts.getProducts()
+        const updateProduct = allProducts.find(product => product.id === Number(id))
+        
+        if(updateProduct){
+            const productKeys = Object.keys(updateProduct)
+            productKeys.includes(key)
+            ?
+            res.json( { message: `The product with id ${id} has been updated`})
+            :
+            res.json( { message: `The key ${key} is not a property of the products`})
+        }else{
+            res.json( { message: `Sorry, we couldnt find a product with id ${id} in the system.`})
+        }     
+        
     } catch (error) {
         console.log(error)
     }
@@ -85,8 +97,15 @@ router.delete('/:id', async (req, res) => {
 
     try {
         const { id } = req.params
-        await managerProducts.deleteProduct(Number(id) )
-        res.json( { message: `the product with id ${req.params.id} has been deleted`})        
+        const allProducts = await managerProducts.getProducts()
+        const deletedProduct = allProducts.find(product => product.id === Number(id))
+        deletedProduct
+        ?
+        res.json( { message: `the product with id ${req.params.id} has been deleted`})
+        :
+        res.json( { message: `There is no product with the id ${req.params.id} in the system.`})       
+        
+        await managerProducts.deleteProduct(Number(id))
     } catch (error) {
         console.log(error)
     }
