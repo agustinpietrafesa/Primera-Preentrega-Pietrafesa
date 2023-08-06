@@ -16,7 +16,15 @@ router.get('/', async (req, res) => {
 
 })
 
-router.get('/:id', (req, res) => {
+/*********Muestra los productos de un carrito puntual  *******/
+router.get('/:cid', async (req, res) => {
+    try {
+        const { cid } = req.params
+        await managerCarts.getCartProducts( cid )
+    } catch (error) {
+        console.log(error)
+    }
+
     res.json( { message: `el producto es ${req.params.id}`})
 })
 
@@ -32,7 +40,7 @@ router.post('/', async (req, res) => {
 
 })
 
-/******Agregar productso al carrito  ********/
+/******Agregar producto al carrito  ********/
 router.post('/:cid/products/:pid', async (req, res) => {
     try {
         const { cid , pid } = req.params

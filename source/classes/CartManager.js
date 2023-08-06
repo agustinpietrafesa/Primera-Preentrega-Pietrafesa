@@ -1,6 +1,7 @@
 const fs = require('fs')
 const ProductManager = require('../classes/ProductManager')
 
+
 const managerProducts = new ProductManager()
 
 class CartManager {
@@ -23,6 +24,23 @@ class CartManager {
             }else{
                 return []
             }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async getCartProducts(cid){
+        try {
+        const allCarts = await this.getCarts()
+        const cart = allCarts.find(cart => cart.cartId === Number(cid))
+        console.log(cart)
+        
+        if(cart){
+        console.log(cart.products)
+        return (cart.products)
+        }else{
+            console.log('No se encontro el carrito buscado')
+        }
         } catch (error) {
             console.log(error)
         }
@@ -78,13 +96,19 @@ class CartManager {
                     newCart.quantity = newCart.quantity + 1
                     :
                     newCart.quantity = 1
+
+                    const theProduct = cart.products.find(pid => product.id === Number(productId))
                     
+                    if(theProduct){
+                    theProduct.quantity = theProduct.quantity + 1
+                    console.log(theProduct.quantity)
+                    }else{
+                        cart.products.push(newCart)
+                    }
 
                     
-                    cart.products.push(newCart)
-                    this.carts.push(cart)
                     await fs.promises.writeFile(this.path, JSON.stringify(this.carts))
-                    console.log(cart)     
+ 
                 }else{
                     console.log('el carrito no existe')
                 }
