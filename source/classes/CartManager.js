@@ -33,13 +33,12 @@ class CartManager {
         try {
         const allCarts = await this.getCarts()
         const cart = allCarts.find(cart => cart.cartId === Number(cid))
-        console.log(cart)
+
         
         if(cart){
-        console.log(cart.products)
         return (cart.products)
         }else{
-            console.log('No se encontro el carrito buscado')
+            console.log('We couldnt find the cart')
         }
         } catch (error) {
             console.log(error)
@@ -97,11 +96,10 @@ class CartManager {
                     :
                     newCart.quantity = 1
 
-                    const theProduct = cart.products.find(pid => product.id === Number(productId))
-                    
+                    const theProduct = cart.products.find(pid => pid.id === Number(productId))
+
                     if(theProduct){
                     theProduct.quantity = theProduct.quantity + 1
-                    console.log(theProduct.quantity)
                     }else{
                         cart.products.push(newCart)
                     }
@@ -110,10 +108,10 @@ class CartManager {
                     await fs.promises.writeFile(this.path, JSON.stringify(this.carts))
  
                 }else{
-                    console.log('el carrito no existe')
+                    console.log('The cart doesnt exist')
                 }
             }else {
-                console.log('El producto no existe')
+                console.log('The product doesnt exist')
             }
 
         } catch (error) {

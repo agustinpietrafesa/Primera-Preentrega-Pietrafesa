@@ -1,1 +1,1 @@
-[{"cartId":1,"products":[]},{"cartId":2,"products":[{"id":3,"code":"varela","quantity":3}]},{"cartId":3,"products":[{"id":1,"code":"jose","quantity":3}]}]
+[{"cartId":1,"products":[]},{"cartId":2,"products":[{"id":3,"code":"varela","quantity":3}]},{"cartId":3,"products":[{"id":1,"code":"jose","quantity":7},{"id":2,"code":"perdo","quantity":4},{"id":3,"code":"varela","quantity":4}]}]
