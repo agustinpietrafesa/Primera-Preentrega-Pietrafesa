@@ -53,7 +53,7 @@ class CartManager {
 
             const newCart = {
                 cartId: 0,
-                products: []
+                products: [],
             }
 
             
@@ -85,7 +85,7 @@ class CartManager {
                 if(cart){
                     const newCart = {
                         id,
-                        code
+                        code,
                     }
                     
                     const cartKeys = Object.keys(newCart)

@@ -130,9 +130,6 @@ class ProductManager {
                 }
                 }
 
-
-
-
                 await fs.promises.writeFile(this.path, JSON.stringify(this.products))
 
             }else{
