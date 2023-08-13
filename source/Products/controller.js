@@ -5,16 +5,20 @@ const ProductManager = require('../classes/ProductManager')
 const router = Router()
 const managerProducts = new ProductManager()
 
-router.get('/', async (req, res) => {
-    try {
-        const { limit } = req.query
-        const allProducts = await managerProducts.getProducts()
-        const productsFilter = allProducts.slice(0, limit || 10)
-        res.json({Productos: productsFilter})
+// router.get('/', async (req, res) => {
+//     try {
+//         const { limit } = req.query
+//         const allProducts = await managerProducts.getProducts()
+//         const productsFilter = allProducts.slice(0, limit || 10)
+//         res.json({Productos: productsFilter})
         
-    } catch (error) {
-        console.log(error)
-    }
+//     } catch (error) {
+//         console.log(error)
+//     }
+// })
+
+router.get('/', (req,res) => {
+    res.render('home')
 })
 
 router.get('/:id', async (req, res) => {
