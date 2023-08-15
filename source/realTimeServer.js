@@ -2,12 +2,19 @@
 
 const {Server} = require('socket.io')
 
+
 const realTimeServer = httpServer => {
     const io = new Server(httpServer)
     
     io.on('connection', socket => {
         console.log(`Se ha conectado ${socket.id}`)
     })
+    io.emit('prueba', prueba => {
+        prueba = 'agustin'
+        console.log(prueba)
+        
+    })
+    
 }
 
 module.exports = realTimeServer

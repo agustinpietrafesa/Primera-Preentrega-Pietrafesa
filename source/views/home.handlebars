@@ -1,6 +1,14 @@
 <div>
-    <h1>Hola desde index.handlebars</h1>
+    <h1>Products:</h1>
+
+
+    {{#each products}}
+        <div>
+            <h2>{{this.title}} {{this.description}} {{this.code}} Stock: {{this.stock}} Id: {{this.id}}</h2>
+        </div>
+    {{/each}}
+
 </div>
 
-<script src="/socket.io/socket.io.js"></script>
+
 <script src="/js/products.js"></script>
