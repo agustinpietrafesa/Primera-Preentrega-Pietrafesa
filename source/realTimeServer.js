@@ -9,11 +9,6 @@ const realTimeServer = httpServer => {
     io.on('connection', socket => {
         console.log(`Se ha conectado ${socket.id}`)
     })
-    io.emit('prueba', prueba => {
-        prueba = 'agustin'
-        console.log(prueba)
-        
-    })
     
 }
 

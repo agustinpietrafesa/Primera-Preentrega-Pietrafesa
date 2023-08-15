@@ -12,6 +12,7 @@ router.get('/', async (req,res) => {
     res.render('realTimeProducts', {
         products : allProducts,
         style: 'realTime.styles.css'
+        
     })
 })
 
